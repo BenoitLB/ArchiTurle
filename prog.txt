@@ -1,0 +1,47 @@
+
+
+
+
+trace 1; 				0110 000 000 000001		6001
+load R0, 4;				0100 000 000 000100 	4004
+load R1, 1;				0100 001 000 000001 	4201
+load R2, 1;				0100 010 000 000001 	4401
+load R3, -1;			0100 011 000 111111 	463F
+load R4, 2;				0100 100 000 000010 	4802
+load R5, 0;				0100 101 000 000000 	4A00
+
+	bne R4, R5, 2;		1001 100 101 000010		9942
+		add R0, R3;		0101 000 011 000000		50C0
+		load R4, 2;		0100 100 000 000010		4802
+	move R0;			0001 000 000 000000		1000
+	turn R1;			0011 001 000 000000		3200
+	add R1,R2;			0101 001 010 000000		5280
+	add R4,R3;			0101 100 011 000000		58C0
+bne R0, R5, -8;			1001 000 101 111000		9178
+
+halt;					1111 000 000 000000		F000
+
+
+
+
+
+mouvements = 4;
+tourne = 1;
+i = 1;
+j = -1
+ctrl = 2;
+cond = 0;
+
+TQ mouvements != cond faire 	// TQ le nombre de mouvements != 0
+	si ctrl == cond alors		// si ctrl a été assez décrémenté 
+		mouvements = mouvements + j; // mouvements--;
+		ctrl = 2;				// réinitialise ctrl
+	sinon
+		move de mouvements cases;
+		turn direction tu;
+		tourne = tourne + i; 	// tourne++ avec tourne dans [0;3]
+		ctrl = ctrl + j; 		// ctrl--
+	fin si
+fin TQ
+
+exit;
